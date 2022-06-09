@@ -1,0 +1,12 @@
+import httpService from "./httpService";
+import axios from "axios";
+
+const url = `https://jsonplaceholder.typicode.com/blogs`;
+
+export function getListOfBreed() {
+    return axios.get('https://jsonplaceholder.typicode.com/blogs');
+}
+
+export default {
+    getListOfBreed
+}

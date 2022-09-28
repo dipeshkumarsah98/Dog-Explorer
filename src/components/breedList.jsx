@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import httpService from "../services/httpService";
 import Pagination from "./Pagination";
 import Search from "./Search";
 import Button from "@mui/material/Button";
 import { paginate } from "../utilits/paginate";
+import dogBreedStore from "../store/DogBreedStore.js";
 
 export default function BreedList() {
   const navigate = useNavigate();
   const [breedList, setBreedList] = useState([]);
-  const [currentBreed, setCurretBreed] = useState([...Object.keys(breedList)]);
+  const [currentBreed, setCurrentBreed] = useState([...Object.keys(breedList)]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalBreed, setTotalBreed] = useState(0);
@@ -17,13 +17,12 @@ export default function BreedList() {
 
   useEffect(() => {
     async function getBreed() {
-      const { data: breed } = await httpService.get(
-        "https://dog.ceo/api/breeds/list/all"
-      );
-      setBreedList(breed.message);
-      const filteredBreed = paginate(Object.keys(breed.message), 1, pageSize);
-      setCurretBreed(filteredBreed);
-      setTotalBreed(Object.keys(breed.message).length);
+      await dogBreedStore.getData();
+      const breed = dogBreedStore.breedList;
+      setBreedList(breed);
+      const filteredBreed = paginate(breed, 1, pageSize);
+      setCurrentBreed(filteredBreed);
+      setTotalBreed(breed.length);
     }
     getBreed();
     setIsLoading(false);
@@ -31,19 +30,19 @@ export default function BreedList() {
 
   const handelPageChange = (page) => {
     setCurrentPage(page); //this will set the page number we will click on current page
-    const filteredBreed = paginate(Object.keys(breedList), page, pageSize);
-    setCurretBreed(filteredBreed);
+    const filteredBreed = paginate(breedList, page, pageSize);
+    setCurrentBreed(filteredBreed);
   };
 
   const handelSearch = (e) => {
     const value = e.target.value.toLowerCase();
     let result = [];
-    result = Object.keys(breedList).filter((data) => {
+    result = breedList.filter((data) => {
       return data.toLowerCase().includes(value); //searching entered value in data base and returning it
     });
-    setTotalBreed(result.length);
     const filteredBreed = paginate(result, 1, pageSize);
-    setCurretBreed(filteredBreed);
+    setTotalBreed(result.length);
+    setCurrentBreed(filteredBreed);
   };
 
   const handelClick = (breed) => {

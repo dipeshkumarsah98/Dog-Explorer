@@ -3,9 +3,7 @@ import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
 import { paginate } from "../utilits/paginate";
 import dogBreedStore from "../store/DogBreedStore";
-import Loading from "./Loading";
 import Image from "./Image";
-import ImageLoading from "./imageLoading";
 
 export default function DogDetail() {
   const [dogImage, setDogImage] = useState([]);

@@ -88,7 +88,7 @@ export default function BreedList() {
           )}
         </ul>
 
-        {currentBreed.length && (
+        {currentBreed?.length !== 0 && (
           <Pagination
             itemCount={totalBreed}
             pageChange={handelPageChange}

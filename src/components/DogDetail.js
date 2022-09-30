@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import http from "../services/httpService";
 import Pagination from "./Pagination";
 import { paginate } from "../utilits/paginate";
 import dogBreedStore from "../store/DogBreedStore";

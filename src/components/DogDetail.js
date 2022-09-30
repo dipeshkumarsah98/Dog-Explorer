@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Breadcrumbs, Link } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Pagination from "./Pagination";
 import { paginate } from "../utilits/paginate";
 import dogBreedStore from "../store/DogBreedStore";
 import Image from "./Image";
+import Loading from "./Loading";
 
 export default function DogDetail() {
   const [dogImage, setDogImage] = useState([]);
@@ -11,7 +16,9 @@ export default function DogDetail() {
   const [totalDogImage, setTotalDogImage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const { breed } = useParams();
-  const pageSize = 12;
+  const pageSize = 9;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getDogs() {
@@ -30,12 +37,42 @@ export default function DogDetail() {
     const listedDogs = paginate(dogs, page, pageSize);
     setDogImage(listedDogs);
   };
+  const backHome = () => {
+    navigate("/");
+  };
 
-  if (dogBreedStore.loading) return console.log("anything");
+  if (dogBreedStore.loading) return <Loading />;
 
   return (
-    <div>
-      <h5 className="display-5">Image of {breed} dog</h5>
+    <>
+      <div className="d-flex align-items-center my-3 " onClick={backHome}>
+        <ArrowBackIosIcon
+          sx={{ cursor: "pointer" }}
+          fontSize="large"
+          color="primary"
+        />
+        <span style={{ fontSize: "30px", cursor: "pointer" }}>Home</span>
+      </div>
+      <Breadcrumbs aria-label="breadcrumb" className="my-3">
+        <Link
+          underline="hover"
+          sx={{ display: "flex", alignItems: "center", fontSize: "20px" }}
+          color="inherit"
+          onClick={backHome}
+        >
+          <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+          Home
+        </Link>
+        <Link
+          underline="hover"
+          sx={{ display: "flex", alignItems: "center", fontSize: "20px" }}
+          color="inherit"
+        >
+          <WhatshotIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+          {breed}
+        </Link>
+      </Breadcrumbs>
+      <h5 className="display-5 my-3">Image of {breed} dog</h5>
       <div className="row">
         {dogImage.map((dog, index) => (
           <Image img={dog} key={index} />
@@ -47,6 +84,6 @@ export default function DogDetail() {
         currentPage={currentPage}
         pageSize={12}
       />
-    </div>
+    </>
   );
 }

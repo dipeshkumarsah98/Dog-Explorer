@@ -30,6 +30,9 @@ class DogBreedStore {
     }
   }
   async getDogDetail(breed) {
+    runInAction(() => {
+      this.loading = true;
+    });
     try {
       const { data } = await http.get(
         `https://dog.ceo/api/breed/${breed}/images`

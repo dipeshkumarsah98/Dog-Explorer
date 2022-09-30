@@ -3,15 +3,18 @@ import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
 import { paginate } from "../utilits/paginate";
 import dogBreedStore from "../store/DogBreedStore";
+import Loading from "./Loading";
+import Image from "./Image";
+import ImageLoading from "./imageLoading";
 
 export default function DogDetail() {
   const [dogImage, setDogImage] = useState([]);
   const [dogs, setDogs] = useState([]);
   const [totalDogImage, setTotalDogImage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
   const { breed } = useParams();
   const pageSize = 12;
+
   useEffect(() => {
     async function getDogs() {
       await dogBreedStore.getDogDetail(breed);
@@ -22,7 +25,6 @@ export default function DogDetail() {
       setDogs(dogs);
     }
     getDogs();
-    setIsLoading(false);
   }, [breed]);
 
   const handelPageChange = (page) => {
@@ -30,35 +32,23 @@ export default function DogDetail() {
     const listedDogs = paginate(dogs, page, pageSize);
     setDogImage(listedDogs);
   };
-  if (isLoading) {
-    return (
-      <div>
-        <h2>Loading...</h2>
+
+  if (dogBreedStore.loading) return console.log("anything");
+
+  return (
+    <div>
+      <h5 className="display-5">Image of {breed} dog</h5>
+      <div className="row">
+        {dogImage.map((dog, index) => (
+          <Image img={dog} key={index} />
+        ))}
       </div>
-    );
-  } else {
-    return (
-      <div>
-        <h5 className="display-5">Image of {breed} dog</h5>
-        <div className="row">
-          {dogImage.map((dog, index) => (
-            <div className="col-lg-4 mb-4 mb-lg-0" key={index}>
-              <img
-                src={dog}
-                alt="loading.."
-                key={index}
-                className="w-100 shadow-1-strong rounded mb-4 default-size"
-              />
-            </div>
-          ))}
-        </div>
-        <Pagination
-          itemCount={totalDogImage}
-          pageChange={handelPageChange}
-          currentPage={currentPage}
-          pageSize={12}
-        />
-      </div>
-    );
-  }
+      <Pagination
+        itemCount={totalDogImage}
+        pageChange={handelPageChange}
+        currentPage={currentPage}
+        pageSize={12}
+      />
+    </div>
+  );
 }

@@ -5,12 +5,12 @@ import Search from "./Search";
 import Button from "@mui/material/Button";
 import { paginate } from "../utilits/paginate";
 import dogBreedStore from "../store/DogBreedStore.js";
+import Loading from "./Loading";
 
 export default function BreedList() {
   const navigate = useNavigate();
   const [breedList, setBreedList] = useState([]);
   const [currentBreed, setCurrentBreed] = useState([...Object.keys(breedList)]);
-  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalBreed, setTotalBreed] = useState(0);
   const pageSize = 10; //size of page to show user
@@ -25,7 +25,6 @@ export default function BreedList() {
       setTotalBreed(breed.length);
     }
     getBreed();
-    setIsLoading(false);
   }, []); //single big empty bracket will indicate it as component did mount
 
   const handelPageChange = (page) => {
@@ -49,54 +48,51 @@ export default function BreedList() {
     navigate(`dog/${breed}`);
   };
 
-  if (isLoading) {
-    return (
-      <div>
-        <h1>Loading...</h1>
+  if (dogBreedStore.loading) return <Loading />;
+
+  return (
+    <div className="breed">
+      <h2 className="display-3" onClick={() => navigate("/")}>
+        Welcome to Dog api
+      </h2>
+      <Button
+        variant="outlined"
+        onClick={() => {
+          navigate("dog/random");
+        }}
+      >
+        Get Random Dog
+      </Button>
+
+      <div className="input-group mb-3">
+        <Search handelChange={handelSearch} />
       </div>
-    );
-  } else {
-    return (
-      <div className="breed">
-        <Button
-          variant="outlined"
-          onClick={() => {
-            navigate("dog/random");
-          }}
-        >
-          Get Random Dog
-        </Button>
 
-        <div className="input-group mb-3">
-          <Search handelChange={handelSearch} />
-        </div>
-
-        <ul className="list-group m-3">
-          <h2 className="display-5">List of dog Breed</h2>
-          {currentBreed.length === 0 ? (
-            <h2 className="display-5">No result found</h2>
-          ) : (
-            currentBreed.map((breed, index) => (
-              <li
-                onClick={() => handelClick(breed)}
-                key={index}
-                className="list-group-item clickable list-group-item-light m-1"
-              >
-                {breed}
-              </li>
-            ))
-          )}
-        </ul>
-
-        {currentBreed?.length !== 0 && (
-          <Pagination
-            itemCount={totalBreed}
-            pageChange={handelPageChange}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
+      <ul className="list-group m-3">
+        <h2 className="display-5">List of dog Breed</h2>
+        {currentBreed.length === 0 ? (
+          <h2 className="display-5">No result found</h2>
+        ) : (
+          currentBreed.map((breed, index) => (
+            <li
+              onClick={() => handelClick(breed)}
+              key={index}
+              className="list-group-item clickable list-group-item-light m-1"
+            >
+              {breed}
+            </li>
+          ))
         )}
-      </div>
-    );
-  }
+      </ul>
+
+      {currentBreed?.length !== 0 && (
+        <Pagination
+          itemCount={totalBreed}
+          pageChange={handelPageChange}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
+      )}
+    </div>
+  );
 }

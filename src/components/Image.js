@@ -16,7 +16,7 @@ const Image = ({ img }) => {
         src={img}
         alt="loading.."
         onLoad={() => setIsLoading(false)}
-        className="w-100 shadow-1-strong rounded h-75"
+        className="w-100 shadow-1-strong rounded h-75 lg "
         style={{ display: isLoading ? "none" : "block" }}
       />
     </div>

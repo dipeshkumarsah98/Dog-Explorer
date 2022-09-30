@@ -88,12 +88,14 @@ export default function BreedList() {
           )}
         </ul>
 
-        <Pagination
-          itemCount={totalBreed}
-          pageChange={handelPageChange}
-          currentPage={currentPage}
-          pageSize={pageSize}
-        />
+        {currentBreed.length && (
+          <Pagination
+            itemCount={totalBreed}
+            pageChange={handelPageChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        )}
       </div>
     );
   }

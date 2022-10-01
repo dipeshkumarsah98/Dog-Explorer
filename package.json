@@ -1,5 +1,6 @@
 {
   "name": "dog-finder",
+  "homepage": "https://dipeshkumarsah98.github.io/dog-explorer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,6 +14,7 @@
     "autoprefixer": "^10.4.5",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0-beta1",
+    "gh-pages": "^4.0.0",
     "mobx": "^6.6.2",
     "mobx-react-lite": "^3.4.0",
     "react": "^18.1.0",
@@ -23,6 +25,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

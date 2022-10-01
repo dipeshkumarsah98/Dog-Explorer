@@ -8,8 +8,9 @@ import Image from "./Image";
 import Loading from "./Loading";
 import randomDogStore from "../store/RandomDogStore";
 import { toJS } from "mobx";
+import { observer } from "mobx-react-lite";
 
-export default function RandomDog() {
+function RandomDog() {
   const [dogs, setDogs] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -66,3 +67,5 @@ export default function RandomDog() {
     </div>
   );
 }
+
+export default observer(RandomDog);

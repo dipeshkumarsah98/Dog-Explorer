@@ -19,3 +19,28 @@
   transition: 0 ease-in-out 0.2s;
   cursor: pointer;
 }
+/* mobile */
+@media (max-width: 576px) {
+  .image {
+    width: 350px;
+    height: 400px;
+  }
+}
+@media (max-width: 768px) {
+  .image {
+    width: 420px;
+    height: 400px;
+  }
+}
+/* tablet */
+@media (max-width: 992px) {
+  .image {
+    width: 250px;
+  }
+}
+/* large screen */
+@media (max-width: 1200px) {
+  .image {
+    width: 300px;
+  }
+}

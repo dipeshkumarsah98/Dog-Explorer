@@ -9,21 +9,23 @@ import { paginate } from "../utilits/paginate";
 import dogBreedStore from "../store/DogBreedStore";
 import Image from "./Image";
 import Loading from "./Loading";
+import { toJS } from "mobx";
+import { observer } from "mobx-react-lite";
 
-export default function DogDetail() {
+function DogDetail() {
   const [dogImage, setDogImage] = useState([]);
   const [dogs, setDogs] = useState([]);
   const [totalDogImage, setTotalDogImage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const { breed } = useParams();
-  const pageSize = 9;
+  const pageSize = 12;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     async function getDogs() {
       await dogBreedStore.getDogDetail(breed);
-      const dogs = dogBreedStore.dogImageList;
+      const dogs = toJS(dogBreedStore.dogImageList);
       const listedDogs = paginate(dogs, 1, pageSize);
       setTotalDogImage(dogs.length);
       setDogImage(listedDogs);
@@ -72,18 +74,22 @@ export default function DogDetail() {
           {breed}
         </Link>
       </Breadcrumbs>
-      <h5 className="display-5 my-3">Image of {breed} dog</h5>
+      <h5 className="display-5 fw-normal my-3">Image of {breed} dog</h5>
       <div className="row">
         {dogImage.map((dog, index) => (
           <Image img={dog} key={index} />
         ))}
       </div>
-      <Pagination
-        itemCount={totalDogImage}
-        pageChange={handelPageChange}
-        currentPage={currentPage}
-        pageSize={12}
-      />
+      {dogs?.length > 12 && (
+        <Pagination
+          itemCount={totalDogImage}
+          pageChange={handelPageChange}
+          currentPage={currentPage}
+          pageSize={12}
+        />
+      )}
     </>
   );
 }
+
+export default observer(DogDetail);

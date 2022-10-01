@@ -23,7 +23,7 @@ function RandomDog() {
   }, []);
 
   const backHome = () => {
-    navigate("/");
+    navigate("/dog-explorer");
   };
 
   if (randomDogStore.loading) {

@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="dog/:breed" element={<DogDetail />} />
           <Route path="/dog/random" element={<RandomDog />} />
-          <Route exact path="/" element={<BreedList />} />
+          <Route exact path="/dog-explorer" element={<BreedList />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

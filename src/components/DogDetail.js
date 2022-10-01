@@ -40,7 +40,7 @@ function DogDetail() {
     setDogImage(listedDogs);
   };
   const backHome = () => {
-    navigate("/");
+    navigate("/dog-explorer");
   };
 
   if (dogBreedStore.loading) return <Loading />;

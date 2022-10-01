@@ -46,7 +46,7 @@ function BreedList() {
   };
 
   const handelClick = (breed) => {
-    navigate(`dog/${breed}`);
+    navigate(`/dog/${breed}`);
   };
 
   if (dogBreedStore.loading) return <Loading />;

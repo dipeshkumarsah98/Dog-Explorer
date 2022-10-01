@@ -4,21 +4,19 @@ import { Breadcrumbs, Link } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import http from "../services/httpService";
 import Image from "./Image";
 import Loading from "./Loading";
+import randomDogStore from "../store/RandomDogStore";
+import { toJS } from "mobx";
 
 export default function RandomDog() {
   const [dogs, setDogs] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     async function getRandomDog() {
-      const { data } = await http.get(
-        "https://dog.ceo/api/breeds/image/random/5"
-      );
-      setDogs(data.message);
-      setLoading(false);
+      await randomDogStore.getData();
+      const images = toJS(randomDogStore.dogList);
+      setDogs(images);
     }
     getRandomDog();
   }, []);
@@ -27,7 +25,7 @@ export default function RandomDog() {
     navigate("/");
   };
 
-  if (loading) {
+  if (randomDogStore.loading) {
     return <Loading />;
   } else {
     return (

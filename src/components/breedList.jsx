@@ -74,7 +74,7 @@ export default function BreedList() {
             <li
               onClick={() => handelClick(breed)}
               key={index}
-              className="list-group-item clickable list-group-item-light m-1"
+              className="list-group-item clickable list-group-item-light m-1 breed-item"
             >
               {breed}
             </li>

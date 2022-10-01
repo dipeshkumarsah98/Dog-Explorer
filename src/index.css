@@ -12,3 +12,10 @@
   height: 100%;
   width: 100%;
 }
+.breed-item:hover {
+  background-color: blue;
+  color: white;
+  transform: scale(1.01);
+  transition: 0 ease-in-out 0.2s;
+  cursor: pointer;
+}

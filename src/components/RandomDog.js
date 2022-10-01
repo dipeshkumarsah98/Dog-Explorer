@@ -27,43 +27,42 @@ export default function RandomDog() {
 
   if (randomDogStore.loading) {
     return <Loading />;
-  } else {
-    return (
-      <div>
-        <div className="d-flex align-items-center my-3 " onClick={backHome}>
-          <ArrowBackIosIcon
-            sx={{ cursor: "pointer" }}
-            fontSize="large"
-            color="primary"
-          />
-          <span style={{ fontSize: "30px", cursor: "pointer" }}>Home</span>
-        </div>
-        <Breadcrumbs aria-label="breadcrumb" className="my-3">
-          <Link
-            underline="hover"
-            sx={{ display: "flex", alignItems: "center", fontSize: "20px" }}
-            color="inherit"
-            onClick={backHome}
-          >
-            <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            Home
-          </Link>
-          <Link
-            underline="hover"
-            sx={{ display: "flex", alignItems: "center", fontSize: "20px" }}
-            color="inherit"
-          >
-            <ShuffleIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            {"random"}
-          </Link>
-        </Breadcrumbs>
-        <h1 className="display-5 my-3">Random Dogs</h1>
-        <div className="row">
-          {dogs.map((dog, index) => (
-            <Image img={dog} key={index} />
-          ))}
-        </div>
-      </div>
-    );
   }
+  return (
+    <div>
+      <div className="d-flex align-items-center my-3 " onClick={backHome}>
+        <ArrowBackIosIcon
+          sx={{ cursor: "pointer" }}
+          fontSize="large"
+          color="primary"
+        />
+        <span style={{ fontSize: "30px", cursor: "pointer" }}>Home</span>
+      </div>
+      <Breadcrumbs aria-label="breadcrumb" className="my-3">
+        <Link
+          underline="hover"
+          sx={{ display: "flex", alignItems: "center", fontSize: "20px" }}
+          color="inherit"
+          onClick={backHome}
+        >
+          <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+          Home
+        </Link>
+        <Link
+          underline="hover"
+          sx={{ display: "flex", alignItems: "center", fontSize: "20px" }}
+          color="inherit"
+        >
+          <ShuffleIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+          {"random"}
+        </Link>
+      </Breadcrumbs>
+      <h1 className="display-5 my-3">Random Dogs</h1>
+      <div className="row">
+        {dogs.map((dog, index) => (
+          <Image img={dog} key={index} />
+        ))}
+      </div>
+    </div>
+  );
 }

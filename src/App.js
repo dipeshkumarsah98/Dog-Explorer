@@ -8,6 +8,10 @@ import NotFound from "./components/NotFound";
 function App() {
   return (
     <div className="App">
+      <div className="bg-primary text-white py-3 mb-3">
+        <h2 className=" container display-3">Welcome to Dog Explorer</h2>
+      </div>
+
       <div className="container">
         <Routes>
           <Route path="dog/:breed" element={<DogDetail />} />

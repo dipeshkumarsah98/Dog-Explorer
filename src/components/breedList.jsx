@@ -52,9 +52,6 @@ export default function BreedList() {
 
   return (
     <div className="breed">
-      <h2 className="display-3" onClick={() => navigate("/")}>
-        Welcome to Dog api
-      </h2>
       <Button
         variant="outlined"
         onClick={() => {

@@ -12,6 +12,11 @@ export default function Pagination({
   const pages = [];
   const handleChange = (event, value) => {
     pageChange(value);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   if (pageCount === 1) return null;

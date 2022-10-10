@@ -33,17 +33,25 @@ function BreedList() {
     const filteredBreed = paginate(breedList, page, pageSize);
     setCurrentBreed(filteredBreed);
   };
-
-  const handelSearch = (e) => {
+  const debounce = (func, delay) => {
+    let timer;
+    return function (...args) {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(...args); //calling function after user stopped typing
+      }, delay);
+    };
+  };
+  const handelSearch = debounce((e) => {
     const value = e.target.value.toLowerCase();
     let result = [];
     result = breedList.filter((data) => {
-      return data.toLowerCase().includes(value); //searching entered value in data base and returning it
+      return data.toLowerCase().includes(value); //searching entered value in database and returning it
     });
     const filteredBreed = paginate(result, 1, pageSize);
     setTotalBreed(result.length);
     setCurrentBreed(filteredBreed);
-  };
+  }, 500);
 
   const handelClick = (breed) => {
     navigate(`/dog/${breed}`);
